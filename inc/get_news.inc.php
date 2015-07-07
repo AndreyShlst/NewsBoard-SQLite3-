@@ -1,3 +1,8 @@
+<style>
+    .addNews {
+        display:none !important;
+    }
+</style>
 <?php
     $res = array();
     $res = $news->getNews();
@@ -9,6 +14,7 @@
                   <span ><a href="http://news/news.php?routing=delete&del=$out[id]">Удалить</a></span>
                 </div>
                 <div class=message>
+                  <b>$out[title]</b></br></br>
                   <p>$out[description]</p>
                   <span class=msg-time>$date</span>
                 </div>

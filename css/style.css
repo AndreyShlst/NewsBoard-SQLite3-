@@ -199,7 +199,7 @@ b{
 	position: relative;
 }
 .chat-area ul > li.me{
-	background: #e4eaee;
+	/*background: #e4eaee;*/
 }
 .chat-area ul > li:first-child{
 	border-top: none;
@@ -245,7 +245,7 @@ b{
 	right: 0;
 	bottom: 0;
 	border-top: 1px solid #cfdae1;
-	width: 1090px;
+	width: 1096px;
 }
 .input-area .input-wrapper{
 	background: #fff;
@@ -445,11 +445,29 @@ ul.tabs-container{
 input {
     background-image: none;
     border: none;
-    font: 100%/1.5em "Varela Round", sans-serif;
-    margin: 0;
+    /* font: 100%/1.5em "Varela Round", sans-serif; */
+    margin-bottom: 10px;
     padding: 0;
     -webkit-transition: all .3s;
     transition: all .3s;
+    font-family: "PT Sans",Helvetica,Arial,sans-serif;
+    border-color: #d2d6d7;
+    border-radius: 5px;
+    line-height: 1.5em;
+    color: #333;
+    font-size: 15px;
+    width: 80%;
+    z-index: 0;
+    height: 30px;
+    background: #fff;
+    box-shadow: none;
+    border: 1px solid #bbbcc0;
+    outline: none;
+    padding: 7px 5px;
+    position: relative;
+    z-index: 2;
+    -webkit-appearance: none;
+    background-color: #fff;
 }
 
 .container {
@@ -516,3 +534,73 @@ input {
 #login fieldset input[type="submit"]:hover {
     background: #28ad63;
 }
+
+.create_news {
+    padding: 0 30px 15px !important;
+    margin-top: 15px;
+}
+
+textarea {
+    width: 80%;
+    border-color: #BBBCC0;
+    border-radius: 5px;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+
+}
+
+select {
+    background-image: none;
+    border: none;
+    /* font: 100%/1.5em "Varela Round", sans-serif; */
+    margin-bottom: 10px;
+    padding: 0;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    font-family: "PT Sans",Helvetica,Arial,sans-serif;
+    border-color: #d2d6d7;
+    border-radius: 5px;
+    /* line-height: 1.5em; */
+    color: #333;
+    font-size: 15px;
+    width: 80%;
+    z-index: 0;
+    height: 30px;
+    background: #fff;
+    box-shadow: none;
+    border: 1px solid #bbbcc0;
+    outline: none;
+    /* padding: 7px 5px; */
+    position: relative;
+    z-index: 2;
+    -webkit-appearance: none;
+}
+
+label.field__label {
+    line-height: 1.5em;
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.field__desc {
+    color: #aeb8bc;
+    font-size: 13px;
+    line-height: 1.2em;
+    margin-bottom: 10px;
+    max-width: 550px;
+}
+
+input.addNews {
+    width: 165px;
+    padding: 0 15px;
+    height: 36px;
+    float: none;
+    /* margin-left: 919px; */
+    background-color: #33CC77;
+    font-weight: normal;
+    float: right;
+    margin: 0;
+ }

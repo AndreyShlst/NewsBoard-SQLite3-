@@ -1,47 +1,30 @@
+<style>
+    #createButton {
+        display:none !important;
+    }
+</style>
 <?php
 echo<<<"OUT"
-<form action=" " method="post">
-    Заголовок новости:<br />
-    <input type="text" name="title" /><br />
-    Выберите категорию:<br />
-    <select name="category">
-      <option value="1">Политика</option>
-      <option value="2">Культура</option>
-      <option value="3">Спорт</option>
-    </select>
-    <br />
-    Текст новости:<br />
-    <textarea name="description" cols="50" rows="5"></textarea><br />
-    Источник:<br />
-    <input type="text" name="source" /><br />
-    <br />
-    <input type="submit" value="Добавить!" />
-</form>
-
+<div class="create_news">
+    <form action=" " method="post" id = "addNews">
+       <label class="field__label">Заголовок новости:</label>
+       <div class="field__desc">Сформулируйте заголовок так, чтобы сразу было понятно, о чём речь.</div>
+        <input type="text" name="title" />
+        <label class="field__label">Выберите категорию:</label>
+        <div class="field__desc">Выберите,наиболее подходящую категорию для Вашей новости.</div>
+        <select name="category">
+          <option value="1">Политика</option>
+          <option value="2">Культура</option>
+          <option value="3">Спорт</option>
+          <option value="4">IT</option>
+        </select>
+       <label class="field__label">Текст новости:</label>
+       <div class="field__desc">Опишите,что произошло.</div>
+        <textarea name="description" cols="50" rows="5"></textarea>
+        <label class="field__label">Источник</label>
+        <div class="field__desc">Укажите ссылку на оригинальный контент.Никто не любит пиратов:)</div>
+        <input type="text" name="source" />
+    </form>
+</div>
 OUT;
-
- // <div class="container">
-
- //      <div id="login">
-
- //        <h2><span class="fontawesome-lock"></span>Sign In</h2>
-
- //        <form action="#" method="POST">
-
- //          <fieldset>
-
- //            <p><label for="email">E-mail address</label></p>
- //            <p><input type="email" id="email" placeholder="mail@address.com"></p>
-
- //            <p><label for="password">Password</label></p>
- //            <p><input type="password" id="password" placeholder="password"></p>
-
- //            <p><input type="submit" value="Sign In"></p>
-
- //          </fieldset>
-
- //        </form>
-
- //      </div> 
- //    </div>
 

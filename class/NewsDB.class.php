@@ -2,6 +2,9 @@
 require_once "INewsDB.class.php";
 class NewsDB implements INewsDB{
     const DB_NAME = "./db/news.db";// имя базы данных
+    const RSS_NAME = "./rss/rss.xml";// имя RSS-файла
+    const RSS_TITLE = "Новостная лента";// Заголовок ленты
+    const RSS_LINK = "http://news/news.php";// ссылка на ленту
     private $_db = null;//для хранения экземпляра класса SQLite3.
 
     //Конструктор
@@ -79,7 +82,12 @@ class NewsDB implements INewsDB{
                         '$source',
                         $dt)";
         $res = $this->_db->exec($sql);
-        return $res;
+        if(!$res){
+            return false;
+        }else{
+            $this->createRss();
+            return true;
+        }
     }
 
     //Ф-я преобразования результата sql-запроса к массиву
@@ -115,10 +123,66 @@ class NewsDB implements INewsDB{
         return $this->sqlToArray($res);
     }
 
+    //Ф-я удаления данных
     function deleteNews($id){
             $remove_query = "DELETE FROM msgs WHERE msgs.id = $id";
             $res = $this->_db->query($remove_query);
         if(!$res){echo "Error";}
+    }
+
+    //Ф-я формирования rss-документа(c помощью интерфейса DOM)
+    private function createRss(){
+        $dom = new DOMDocument("1.0","utf-8");//экземпляр класса DOMDocument
+        $rss = $dom->createElement("rss");//корневой элемент rss
+        $dom->appendChild($rss);//привязали  его к объекту $dom
+
+        #Для нормального форматирования документа..
+        $dom->formatOutput = true;
+        $dom->preserveWhiteSpace = false;
+
+        $version = $dom->createAttribute("version");//Cоздали атрибут version
+        $version->value = '2.0';
+        $rss->appendChild($version);//связали его с корневым елементом
+
+        $channel = $dom->createElement("channel");
+        $title = $dom->createElement("title",self::RSS_TITLE);
+        $link = $dom->createElement("link",self::RSS_LINK);
+        $channel->appendChild($title);
+        $channel->appendChild($link);
+        $rss->appendChild($channel);
+
+        $contents = $this->getNews();
+        if(!$contents){
+            return false;
+        }
+
+        foreach($contents as $news){//Формируем отдельные элементы
+            $item = $dom->createElement("item");
+            $title = $dom->createElement("title",$news['title']);
+            $category = $dom->createElement("category",$news['category']);
+
+            $description = $dom->createElement("description");
+            $cdata  = $dom->createCDATASection($news['description']);
+            $description->appendChild($cdata);
+
+            $link = $dom->createElement("link","#");
+            $date = date("m.d.y",$news["datetime"]);
+            $publicDate = $dom->createElement("publicDate",$date);
+
+            $item->appendChild($title);
+            $item->appendChild($link);
+            $item->appendChild($description);
+            $item->appendChild($publicDate);
+            $item->appendChild($category);
+
+            $channel->appendChild($item);
+
+
+        }
+        $dom->save(self::RSS_NAME);
+
+
+
     }
 }
 
