@@ -36,7 +36,8 @@ class NewsDB implements INewsDB{
                 $sql = "INSERT INTO category(id, name)
                     SELECT 1 as id, 'Политика' as name
                     UNION SELECT 2 as id, 'Культура' as name
-                    UNION SELECT 3 as id, 'Спорт' as name ";
+                    UNION SELECT 3 as id, 'Спорт' as name
+                    UNION SELECT 4 as id, 'IT' as name ";
                 if(!$this->_db->exec($sql)){
                     throw new Exception($this->_db->lastErrorMsg());
                 }
@@ -99,8 +100,8 @@ class NewsDB implements INewsDB{
         return $array;
     }
 
-    //Ф-я выборки данных
-    function getNews(){
+    //Ф-я выборки всех данных
+    function getAllNews(){
         try{
             $sql = "SELECT msgs.id as id,
                            title,
@@ -110,6 +111,29 @@ class NewsDB implements INewsDB{
                            datetime
                     FROM msgs, category
                     WHERE category.id = msgs.category
+                    ORDER BY msgs.id DESC";
+
+            $res = $this->_db->query($sql);
+            if(!$res){
+                throw new Exception ($this->_db->lastErrorMsg());
+            }
+        }catch (Exception $e){
+            $errMsg = "Произошла ошибка при выводе ленты новостей";
+            return $errMsg;
+        }
+        return $this->sqlToArray($res);
+    }
+
+    //Ф-я выборки данных по категории
+    function getNewsForCategory($id){
+        try{
+            $sql = "SELECT msgs.id as id,
+                           title,
+                           description,
+                           source,
+                           datetime
+                    FROM msgs
+                    WHERE msgs.category = $id
                     ORDER BY msgs.id DESC";
 
             $res = $this->_db->query($sql);
@@ -151,7 +175,7 @@ class NewsDB implements INewsDB{
         $channel->appendChild($link);
         $rss->appendChild($channel);
 
-        $contents = $this->getNews();
+        $contents = $this->getAllNews();
         if(!$contents){
             return false;
         }
@@ -181,9 +205,5 @@ class NewsDB implements INewsDB{
         }
         $dom->save(self::RSS_NAME);
 
-
-
     }
 }
-
-//$news = new NewsDB();

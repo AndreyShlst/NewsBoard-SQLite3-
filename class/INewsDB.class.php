@@ -21,7 +21,7 @@ interface INewsDB{
 	 *	
 	 *	@return array - результат выборки в виде массива
 	*/
-	function getNews();
+	function getAllNews();
 	
     /**
 	 *	Удаление записи из новостной ленты

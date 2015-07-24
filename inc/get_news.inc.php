@@ -4,10 +4,35 @@
     }
 </style>
 <?php
+    $category_id = (int)(strip_tags(trim($_GET["category_id"])));
     $res = array();
-    $res = $news->getNews();
+
+    switch($category_id){
+        case "0":
+            $res = $news->getAllNews();
+            break;
+        case "1":
+            $res = $news->getNewsForCategory($category_id);
+            $category_name = "Политика";
+            break;
+        case "2":
+            $res = $news->getNewsForCategory($category_id);
+            $category_name = "Культура";
+            break;
+        case "3":
+            $res = $news->getNewsForCategory($category_id);
+            $category_name = "Спорт";
+            break;
+        case "4":
+            $res = $news->getNewsForCategory($category_id);
+            $category_name = "IT";
+            break;
+    }
     foreach($res as $out){
         $date = date("d-m-Y: H-i-s",$out[datetime]);
+        if(!$out["category"]){
+            $out["category"] = $category_name;
+        }
         echo<<< "OUT"
             <li class=me>
                 <div class=name>
@@ -16,7 +41,10 @@
                 <div class=message>
                   <b>$out[title]</b></br></br>
                   <p>$out[description]</p>
-                  <span class=msg-time>$date</span>
+                  <div class=msg-time>
+                    $date <br><br>
+                    #$out[category]
+                  </div>
                 </div>
               </li>
         
